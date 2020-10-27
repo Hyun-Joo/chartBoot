@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>CHART</title>
+<script th:src="@{/js/jquery-3.5.1.min.js}"></script>
+<script src="/js/axios.min.js"></script>
+<script src="/js/chart.js"></script>
+</head>
+<body>
+<h1>[[${pageName}]]</h1>
+<table style="width:1700px; border-collapse:collapse; margin:0 auto;">
+	<tr>
+		<td rowspan="2">
+			<select>
+				<option>전체</option>
+				<option th:each="region, idx : ${regionList}" 
+						th:value="${region.cdId}" 
+						th:text="${region.cdNm}">
+				</option>
+			</select>
+		</td>
+		<td>
+			<input type="radio" name="argGr" id="argGr1" value="" checked><label for="argGr1">전체</label>
+			<input type="radio" name="argGr" id="argGr2" value="00"><label for="argGr2">DATA</label>
+			<input type="radio" name="argGr" id="argGr3" value="01"><label for="argGr3">중간총계</label>
+			<input type="radio" name="argGr" id="argGr4" value="11"><label for="argGr4">총계</label>
+		</td>
+		<td>
+			<input type="radio" name="argDir" id="dirF" value="F" checked>
+				<label for="dirF">DATA 우선</label>
+			<input type="radio" name="argDir" id="dirR" value="R">
+				<label for="dirR">총계 우선</label>
+		</td>
+		<td rowspan="2">
+			<button id="btnSearch">검색</button>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<input type="number" min="1" th:max="${#arrays.length(regionList)}"
+				   th:each="region, i : ${regionList}"
+				   th:text="|&nbsp;${region.cdNm}&nbsp;&nbsp;&nbsp;|">
+		</td>
+		<td>
+		건수&nbsp;<input name="argRn" id="argRn">
+		</td>
+	</tr>
+</table>
+<hr />
+<div style="text-align: center;">
+	<strong>경과 시간 : </strong><strong id="elapsedTime"></strong>
+</div>
+<P>
+<table border="1" 
+	   style="width:100%; border:1px solid black; border-collapse:collapse;">
+	<thead style="background-color:#e6e6e6;">
+		<tr>
+			<th>지역</th>
+			<th>국가</th>
+			<th>청소기</th>
+			<th>세탁기</th>
+			<th>건조기</th>
+			<th>정수기</th>
+			<th>도어락</th>
+			<th>전화기</th>
+			<th>냉장고</th>
+			<th>김치냉장고</th>
+			<th>전자레인지</th>
+			<th>가스레인지</th>
+			<th>합계</th>
+		</tr>
+	</thead>
+	<tbody id="chartBody"></tbody>
+</table>
+
+<script th:inline="javascript">
+	const colorList = [[${colorList}]];
+</script>
+</body>
+</html>
